@@ -20,9 +20,9 @@ function Dashboard({ orders }) {
   };
 
   const downloadCSV = () => {
-    const csvContent = "Order ID,Table Number,Items,Total,Status,Time,Notes\n" + 
+    const csvContent = "Order ID,Name,Table Number,Items,Total,Status,Time,Notes\n" + 
       orders.map(order => 
-        `${order.id},${order.tableNumber},"${order.items.join(', ')}",$${order.total},${order.status},${order.time},"${order.notes}"`
+        `${order.id},${order.name},${order.tableNumber},"${order.items.join(', ')}",$${order.total},${order.status},${order.time},"${order.notes}"`
       ).join("\n");
     
     const blob = new Blob([csvContent], { type: 'text/csv' });
