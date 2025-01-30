@@ -120,22 +120,53 @@ function App() {
   return (
     <div className="flex h-screen bg-gray-100">
       {/* Sidebar */}
-      <div className={`${sidebarOpen ? 'w-64' : 'w-20'} bg-[#1e1b4b] text-white transition-all duration-300`}>
+      <div
+        className={`${
+          sidebarOpen ? "w-64" : "w-20"
+        } bg-[#1e1b4b] text-white transition-all duration-300`}
+      >
         <div className="p-4 flex items-center justify-between">
-          <h1 className={`${sidebarOpen ? 'block' : 'hidden'} font-bold text-xl`}>QuickBite</h1>
+          <div className="flex justify-start align-center">
+            <img
+              className={`${sidebarOpen ? "block" : "hidden"}`}
+              style={{ width: "14rem" }}
+              src="./src/assets/site-horizontal-v1.svg"
+              alt="site-horizontal-v1"
+            />
+          </div>
           <button onClick={() => setSidebarOpen(!sidebarOpen)} className="p-2">
             <MenuIcon size={24} />
           </button>
         </div>
         <nav className="mt-8">
-          <SidebarItem icon={<LayoutDashboard />} text="Dashboard" active={activeTab === 'dashboard'} 
-            onClick={() => setActiveTab('dashboard')} expanded={sidebarOpen} />
-          <SidebarItem icon={<ClipboardList />} text="Orders" active={activeTab === 'orders'} 
-            onClick={() => setActiveTab('orders')} expanded={sidebarOpen} />
-          <SidebarItem icon={<UtensilsCrossed />} text="Menu" active={activeTab === 'menu'} 
-            onClick={() => setActiveTab('menu')} expanded={sidebarOpen} />
+          <SidebarItem
+            icon={<LayoutDashboard />}
+            text="Dashboard"
+            active={activeTab === "dashboard"}
+            onClick={() => setActiveTab("dashboard")}
+            expanded={sidebarOpen}
+          />
+          <SidebarItem
+            icon={<ClipboardList />}
+            text="Orders"
+            active={activeTab === "orders"}
+            onClick={() => setActiveTab("orders")}
+            expanded={sidebarOpen}
+          />
+          <SidebarItem
+            icon={<UtensilsCrossed />}
+            text="Menu"
+            active={activeTab === "menu"}
+            onClick={() => setActiveTab("menu")}
+            expanded={sidebarOpen}
+          />
           <div className="mt-auto pt-4 border-t border-gray-700">
-            <SidebarItem icon={<LogOut />} text="Logout" onClick={handleLogout} expanded={sidebarOpen} />
+            <SidebarItem
+              icon={<LogOut />}
+              text="Logout"
+              onClick={handleLogout}
+              expanded={sidebarOpen}
+            />
           </div>
         </nav>
       </div>
@@ -145,18 +176,20 @@ function App() {
         <header className="bg-white shadow-sm">
           <div className="px-6 py-4">
             <h2 className="text-2xl font-semibold text-gray-800">
-              {activeTab === 'dashboard' && 'Restaurant Dashboard'}
-              {activeTab === 'orders' && 'Order Management'}
-              {activeTab === 'menu' && 'Menu Management'}
+              {activeTab === "dashboard" && "Restaurant Dashboard"}
+              {activeTab === "orders" && "Order Management"}
+              {activeTab === "menu" && "Menu Management"}
             </h2>
           </div>
         </header>
 
         <main className="p-6">
-          {activeTab === 'dashboard' && <Dashboard orders={orders} />}
-          {activeTab === 'orders' && <Orders orders={orders} toggleOrderStatus={toggleOrderStatus} />}
-          {activeTab === 'menu' && (
-            <Menu 
+          {activeTab === "dashboard" && <Dashboard orders={orders} />}
+          {activeTab === "orders" && (
+            <Orders orders={orders} toggleOrderStatus={toggleOrderStatus} />
+          )}
+          {activeTab === "menu" && (
+            <Menu
               menuItems={menuItems}
               newMenuItem={newMenuItem}
               setNewMenuItem={setNewMenuItem}
