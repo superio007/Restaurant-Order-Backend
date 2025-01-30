@@ -1,62 +1,110 @@
-import React, { useState } from 'react';
-import { 
-  LayoutDashboard, 
-  ClipboardList, 
-  UtensilsCrossed, 
+import React, { useState } from "react";
+import {
+  LayoutDashboard,
+  ClipboardList,
+  UtensilsCrossed,
   Menu as MenuIcon,
-  LogOut
-} from 'lucide-react';
-import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
+  LogOut,
+} from "lucide-react";
+import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
 import Dashboard from "./Pages/Dashboard";
-import Orders from './Pages/Orders';
+import Orders from "./Pages/Orders";
 import Menu from "./Pages/Menu";
 import Login from "./Pages/Login";
 import Signup from "./Pages/Signup";
-import SidebarItem from './components/SidebarItem';
+import SidebarItem from "./components/SidebarItem";
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
 // Mock data
 const initialOrders = [
-  { 
-    id: 1, 
+  {
+    id: 1,
     tableNumber: 5,
-    items: ['Burger', 'Fries'], 
-    total: 15.99, 
-    status: 'pending', 
-    time: '2024-03-15 14:30',
-    notes: 'No onions in burger'
+    items: ["Burger", "Fries"],
+    total: 15.99,
+    status: "pending",
+    time: "2024-03-15 14:30",
+    notes: "No onions in burger",
   },
-  { 
-    id: 2, 
+  {
+    id: 2,
     tableNumber: 3,
-    items: ['Pizza', 'Coke'], 
-    total: 20.99, 
-    status: 'completed', 
-    time: '2024-03-15 15:00',
-    notes: 'Extra cheese'
+    items: ["Pizza", "Coke"],
+    total: 20.99,
+    status: "completed",
+    time: "2024-03-15 15:00",
+    notes: "Extra cheese",
+  },
+  {
+    id: 3,
+    tableNumber: 2,
+    items: ["Burger", "Pizza"],
+    total: 28.99,
+    status: "pending",
+    time: "2024-03-15 15:30",
+    notes: "",
+  },
+  {
+    id: 4,
+    tableNumber: 1,
+    items: ["Fries", "Coke"],
+    total: 9.99,
+    status: "completed",
+    time: "2024-03-15 16:00",
+    notes: "",
+  },
+  {
+    id: 5,
+    tableNumber: 4,
+    items: ["Burger", "Fries", "Coke"],
+    total: 25.99,
+    status: "pending",
+    time: "2024-03-15 16:30",
+    notes: "",
+  },
+  {
+    id: 6,
+    tableNumber: 6,
+    items: ["Pizza", "Coke"],
+    total: 22.99,
+    status: "completed",
+    time: "2024-03-15 17:00",
+    notes: "",
   },
 ];
 
 const initialMenuItems = [
-  { id: 1, name: 'Burger', price: 9.99, category: 'Main Course', available: true },
-  { id: 2, name: 'Pizza', price: 12.99, category: 'Main Course', available: true },
-  { id: 3, name: 'Fries', price: 4.99, category: 'Sides', available: true },
-  { id: 4, name: 'Coke', price: 2.99, category: 'Beverages', available: true },
+  {
+    id: 1,
+    name: "Burger",
+    price: 9.99,
+    category: "Main Course",
+    available: true,
+  },
+  {
+    id: 2,
+    name: "Pizza",
+    price: 12.99,
+    category: "Main Course",
+    available: true,
+  },
+  { id: 3, name: "Fries", price: 4.99, category: "Sides", available: true },
+  { id: 4, name: "Coke", price: 2.99, category: "Beverages", available: true },
 ];
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [showSignup, setShowSignup] = useState(false);
-  const [activeTab, setActiveTab] = useState('dashboard');
+  const [activeTab, setActiveTab] = useState("dashboard");
   const [sidebarOpen, setSidebarOpen] = useState(true);
   const [orders, setOrders] = useState(initialOrders);
   const [menuItems, setMenuItems] = useState(initialMenuItems);
   const [newMenuItem, setNewMenuItem] = useState({
-    name: '',
-    price: '',
-    category: 'Main Course',
-    available: true
+    name: "",
+    price: "",
+    category: "Main Course",
+    available: true,
   });
 
   const handleLogin = () => {
@@ -82,39 +130,51 @@ function App() {
           name: newMenuItem.name,
           price: parseFloat(newMenuItem.price),
           category: newMenuItem.category,
-          available: newMenuItem.available
-        }
+          available: newMenuItem.available,
+        },
       ]);
       setNewMenuItem({
-        name: '',
-        price: '',
-        category: 'Main Course',
-        available: true
+        name: "",
+        price: "",
+        category: "Main Course",
+        available: true,
       });
     }
   };
 
   const handleDeleteMenuItem = (id) => {
-    setMenuItems(menuItems.filter(item => item.id !== id));
+    setMenuItems(menuItems.filter((item) => item.id !== id));
   };
 
   const toggleOrderStatus = (orderId) => {
-    setOrders(orders.map(order => {
-      if (order.id === orderId) {
-        return {
-          ...order,
-          status: order.status === 'pending' ? 'completed' : 'pending'
-        };
-      }
-      return order;
-    }));
+    setOrders(
+      orders.map((order) => {
+        if (order.id === orderId) {
+          return {
+            ...order,
+            status: order.status === "pending" ? "completed" : "pending",
+          };
+        }
+        return order;
+      })
+    );
   };
 
   if (!isAuthenticated) {
     if (showSignup) {
-      return <Signup onSignup={handleSignup} onSwitchToLogin={() => setShowSignup(false)} />;
+      return (
+        <Signup
+          onSignup={handleSignup}
+          onSwitchToLogin={() => setShowSignup(false)}
+        />
+      );
     }
-    return <Login onLogin={handleLogin} onSwitchToSignup={() => setShowSignup(true)} />;
+    return (
+      <Login
+        onLogin={handleLogin}
+        onSwitchToSignup={() => setShowSignup(true)}
+      />
+    );
   }
 
   return (
