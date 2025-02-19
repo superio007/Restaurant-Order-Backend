@@ -216,6 +216,7 @@ app.delete("/api/orders/:id", async (req, res) => {
         res.status(500).json({ error: err.message, message: "Something went wrong" });
     }
 });
+
 // API endpoint for fetching Menu Items
 //  Get all menu items
 app.get("/api/menu-items", async (req, res) => {
@@ -228,26 +229,26 @@ app.get("/api/menu-items", async (req, res) => {
     }
 });
 
-//  Get a specific menu item by ID
-app.get("/api/menu-items/:id", async (req, res) => {
+app.get("/api/menu-items/:restaurantId", async (req, res) => {
     try {
-        const menuItemId = Number(req.params.id);
-        if (isNaN(menuItemId)) {
-            return res.status(400).json({ message: "Invalid menu item ID" });
+        const restaurantId = Number(req.params.restaurantId);
+        if (isNaN(restaurantId)) {
+            return res.status(400).json({ message: "Invalid restaurant ID" });
         }
 
-        const [result] = await db.query("SELECT * FROM menu_items WHERE id = ?", [menuItemId]);
+        const [result] = await db.query("SELECT * FROM menu_items WHERE restaurantId = ?", [restaurantId]);
 
         if (result.length === 0) {
-            return res.status(404).json({ message: "Menu item not found" });
+            return res.status(404).json({ message: "No menu items found for this restaurant" });
         }
 
-        res.status(200).json({ data: result[0] });
+        res.status(200).json({ data: result });  // Return all menu items
     } catch (err) {
-        console.error("Error fetching menu item:", err);
+        console.error("Error fetching menu items:", err);
         res.status(500).json({ error: err.message, message: "Something went wrong" });
     }
 });
+
 
 //  Add a new menu item
 app.post("/api/menu-items-add", async (req, res) => {
